@@ -1,0 +1,37 @@
+---
+
+role_dir: "{{role_path}}"
+
+# defaults file for sa-docker-gc
+
+docker_gc_repo: spotify/docker-gc
+docker_gc_version: master
+
+docker_gc_working_dir: "/var/lib/docker-gc"
+docker_gc_bin: "/usr/sbin/docker-gc"
+
+# /etc/docker-gc-exclude
+docker_gc_exclude_default:
+  - "adminer:latest"
+  - "alpine:3.5"
+  - "container-conductor-ubuntu-xenial:0.9.2"
+  - "debian:jessie"
+  - "mysql:5.7"
+  - "nginx:1.12-alpine"
+  - "postgres:9.4"
+  - "rabbitmq:3.6.12-alpine"
+  - "softasap/ubuntu:16.04"
+  - "ubuntu:16.04"
+  - "uifd/ui-for-docker:latest"
+
+
+docker_gc_exclude: []
+
+# /etc/docker-gc-exclude-containers
+
+docker_gc_exclude_containers_default:
+ - "docker_ui"
+ - "ui-for-docker"
+
+
+docker_gc_exclude_containers: []

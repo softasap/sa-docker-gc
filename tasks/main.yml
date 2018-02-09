@@ -1,0 +1,57 @@
+---
+  - name: DockerGC | Check if is present
+    command: "test -x {{docker_gc_bin}}"
+    ignore_errors: yes
+    register: gc_present
+    tags: dockergc
+
+  - name: DockerGC | Ensure working dir present
+    file: path="{{docker_gc_working_dir}}" state="directory"
+    when: gc_present|failed
+    become: yes
+    tags: dockergc
+
+  - name: DockerGC | Download binary
+    get_url:
+      url: "https://raw.githubusercontent.com/{{docker_gc_repo}}/{{docker_gc_version}}/docker-gc"
+      dest: "{{docker_gc_bin}}"
+      mode: 0755
+    when: gc_present|failed and docker_gc_version=="master"
+    become: yes
+    tags: dockergc
+
+  - name: DockerGC | Local binary
+    copy:
+      src: "{{role_dir}}/files/docker-gc"
+      dest: "{{docker_gc_bin}}"
+      mode: 0755
+    when: gc_present|failed and docker_gc_version=="local"
+    become: yes
+    tags: dockergc
+
+  - name: DockerGC | Local binary
+    copy:
+      src: "{{role_dir}}/files/docker-gc"
+      dest: "{{docker_gc_bin}}"
+      mode: 0755
+    when: gc_present|failed and docker_gc_version=="local"
+    become: yes
+    tags: dockergc
+
+  - name: DockerGC | Template docker-gc-exclude-containers
+    copy:
+      src: "{{role_dir}}/templates/docker-gc-exclude-containers.j2"
+      dest: "/etc/docker-gc-exclude-containers"
+      mode: 0755
+    when: gc_present|failed
+    become: yes
+    tags: dockergc
+
+  - name: DockerGC | Template docker-gc-exclude
+    copy:
+      src: "{{role_dir}}/templates/docker-gc-exclude-containers.j2"
+      dest: "/etc/docker-gc-exclude"
+      mode: 0755
+    when: gc_present|failed
+    become: yes
+    tags: dockergc

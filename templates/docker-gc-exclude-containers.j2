@@ -1,0 +1,6 @@
+{% for row in docker_gc_exclude_containers_default|default([]) %}
+{{row}}
+{% endfor %}
+{% for row in docker_gc_exclude_containers|default([]) %}
+{{row}}
+{% endfor %}
