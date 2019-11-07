@@ -7,7 +7,7 @@
 
   - name: DockerGC | Ensure working dir present
     file: path="{{docker_gc_working_dir}}" state="directory"
-    when: gc_present|failed
+    when: gc_present is failed
     become: yes
     tags: dockergc
 
@@ -16,7 +16,7 @@
       url: "https://raw.githubusercontent.com/{{docker_gc_repo}}/{{docker_gc_version}}/docker-gc"
       dest: "{{docker_gc_bin}}"
       mode: 0755
-    when: gc_present|failed and docker_gc_version=="master"
+    when: gc_present is failed and docker_gc_version=="master"
     become: yes
     tags: dockergc
 
@@ -25,7 +25,7 @@
       src: "{{role_dir}}/files/docker-gc"
       dest: "{{docker_gc_bin}}"
       mode: 0755
-    when: gc_present|failed and docker_gc_version=="local"
+    when: gc_present is failed and docker_gc_version=="local"
     become: yes
     tags: dockergc
 
@@ -34,7 +34,7 @@
       src: "{{role_dir}}/files/docker-gc"
       dest: "{{docker_gc_bin}}"
       mode: 0755
-    when: gc_present|failed and docker_gc_version=="local"
+    when: gc_present is failed and docker_gc_version=="local"
     become: yes
     tags: dockergc
 
